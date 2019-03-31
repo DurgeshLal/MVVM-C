@@ -17,10 +17,10 @@ class SchoolViewModel: ViewModeling {
     }
     
     var schoolTitle: String? {
-        return school.school_name
+        return school.schoolName
     }
     
     var schoolDescription: String? {
-        return school.overview_paragraph
+        return school.overviewParagraph
     }
 }

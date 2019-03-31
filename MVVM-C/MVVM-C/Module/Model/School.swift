@@ -8,10 +8,11 @@
 
 
 import UIKit
-
+// Important Codable links
+//https://medium.com/makingtuenti/indeterminate-types-with-codable-in-swift-5a1af0aa9f3d
 
 struct School: Codable {
-    var academicopportunities1: String?
+    var academicopportunitiesOne: String?
     var academicopportunities2: String?
     var admissionspriority11: String?
     var admissionspriority21: String?
@@ -49,7 +50,7 @@ struct School: Codable {
     var method1: String?
     var neighborhood: String?
     var nta: String?
-    var overview_paragraph: String?
+    var overviewParagraph: String?
     var pct_stu_enough_variety: String?
     var pct_stu_safe: String?
     var phone_number: String?
@@ -57,7 +58,7 @@ struct School: Codable {
     var program1: String?
     var school_10th_seats: String?
     var school_email: String?
-    var school_name: String?
+    var schoolName: String?
     var school_sports: String?
     var seats101: String?
     var seats9ge1: String?
@@ -68,4 +69,30 @@ struct School: Codable {
     var transfer: String?
     var website: String?
     var zip: String?
+}
+
+
+extension School {
+    
+    /// Codable: use different key than api
+    ///
+    /// - academicopportunitiesOne: local key | api name is academicopportunities1
+    /// - schoolName: local name | api name is school_name
+    /// - overviewParagraph: lacl name api name is overview_paragraph
+    enum CodingKeys: String, CodingKey {
+        case academicopportunitiesOne = "academicopportunities1"
+        case schoolName = "school_name"
+        case overviewParagraph = "overview_paragraph"
+    }
+    /*
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.academicopportunitiesOne = try container.decode(String.self, forKey: .academicopportunitiesOne)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.academicopportunitiesOne, forKey: .academicopportunitiesOne)
+    }
+ */
 }

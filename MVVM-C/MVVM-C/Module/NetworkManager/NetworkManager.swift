@@ -9,6 +9,10 @@
 import UIKit
 typealias Completion = (Any?, Error?) -> Void
 
+class ApiManager {
+    
+}
+
 class NetworkManager: NSObject {
     
     enum URLString: String {

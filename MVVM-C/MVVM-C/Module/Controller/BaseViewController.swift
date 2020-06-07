@@ -21,8 +21,8 @@ class BaseViewController: UIViewController {
         
         let views: [String: Any] = ["tempSpinner": tempSpinner]
         var constraints: [NSLayoutConstraint] = []
-        constraints += NSLayoutConstraint.constraints( withVisualFormat: "H:|[tempSpinner(30)]", metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints( withVisualFormat: "V:|[tempSpinner(30)]", metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraints( withVisualFormat: "H:|[tempSpinner(30)]|", metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraints( withVisualFormat: "V:|[tempSpinner(30)]|", metrics: nil, views: views)
         if let center = appDelegate?.window?.center {
             tempSpinner.center = center
         }
@@ -30,6 +30,23 @@ class BaseViewController: UIViewController {
         appDelegate?.window?.bringSubviewToFront(tempSpinner)
         return tempSpinner
     }()
+    
+    var updateLoadingStatus: (() -> Void)?
+    
+    var isLoading: Bool = false {
+        didSet {
+            updateLoadingStatus?()
+        }
+    }
+    
+    func setuploadingIndicator() {
+        updateLoadingStatus = { [weak self] () in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.isLoading ? self.showSpinner() : self.hideSpinner()
+            }
+        }
+    }
     
     func showSpinner() {
         spinner.startAnimating()

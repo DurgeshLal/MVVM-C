@@ -25,6 +25,9 @@
 		45C75A44223F3C4500B6FA70 /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C75A43223F3C4500B6FA70 /* SchoolViewModel.swift */; };
 		45C75A46223F3C9600B6FA70 /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C75A45223F3C9600B6FA70 /* HomeViewModelTest.swift */; };
 		45C75A4A223F3D0800B6FA70 /* HomeMockDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C75A49223F3D0800B6FA70 /* HomeMockDataManager.swift */; };
+		5A93C173248C0EE500366C88 /* SchoolSatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A93C172248C0EE500366C88 /* SchoolSatViewModel.swift */; };
+		5A93C175248C219B00366C88 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A93C174248C219B00366C88 /* Binding.swift */; };
+		5A93C177248C444E00366C88 /* SatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A93C176248C444E00366C88 /* SatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,9 @@
 		45C75A43223F3C4500B6FA70 /* SchoolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
 		45C75A45223F3C9600B6FA70 /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
 		45C75A49223F3D0800B6FA70 /* HomeMockDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMockDataManager.swift; sourceTree = "<group>"; };
+		5A93C172248C0EE500366C88 /* SchoolSatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolSatViewModel.swift; sourceTree = "<group>"; };
+		5A93C174248C219B00366C88 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		5A93C176248C444E00366C88 /* SatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +191,7 @@
 			children = (
 				45457C85223ECF2800EBA947 /* BaseViewController.swift */,
 				45457C3C2239E5EF00EBA947 /* HomeViewController.swift */,
+				5A93C176248C444E00366C88 /* SatViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -194,6 +201,8 @@
 			children = (
 				45457C712239EE6E00EBA947 /* HomeViewModel.swift */,
 				45C75A43223F3C4500B6FA70 /* SchoolViewModel.swift */,
+				5A93C172248C0EE500366C88 /* SchoolSatViewModel.swift */,
+				5A93C174248C219B00366C88 /* Binding.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -380,12 +389,15 @@
 				45C75A44223F3C4500B6FA70 /* SchoolViewModel.swift in Sources */,
 				45457C7F2239FB1500EBA947 /* UITableView+RegisterCell.swift in Sources */,
 				45457C782239F0E700EBA947 /* NetworkManager.swift in Sources */,
+				5A93C175248C219B00366C88 /* Binding.swift in Sources */,
+				5A93C177248C444E00366C88 /* SatViewController.swift in Sources */,
 				45457C86223ECF2800EBA947 /* BaseViewController.swift in Sources */,
 				45457C752239EF1500EBA947 /* HomeDataManager.swift in Sources */,
 				45457C3D2239E5EF00EBA947 /* HomeViewController.swift in Sources */,
 				45457C7B2239F3F700EBA947 /* SchoolSat.swift in Sources */,
 				45457C7C2239F3F700EBA947 /* School.swift in Sources */,
 				45457C702239E67100EBA947 /* AppFlowCoordinator.swift in Sources */,
+				5A93C173248C0EE500366C88 /* SchoolSatViewModel.swift in Sources */,
 				45457C82223A0ED600EBA947 /* SchooleListCell.swift in Sources */,
 				45457C3B2239E5EF00EBA947 /* AppDelegate.swift in Sources */,
 				45457C722239EE6E00EBA947 /* HomeViewModel.swift in Sources */,

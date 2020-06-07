@@ -8,92 +8,58 @@
 
 import Foundation
 
-protocol ViewModeling {
-//    associatedtype DataType
-//    var viewModel: DataType { get set }
-}
+protocol ViewModeling { }
 
-class BaseViewModel: ViewModeling {
-   
-    var reloadData: (() -> Void)?
-    var updateLoadingStatus: (() -> Void)?
-
-    var isLoading: Bool = false {
-        didSet {
-            updateLoadingStatus?()
-        }
-    }
-}
-
-class HomeViewModel: BaseViewModel {
+protocol HomeViewModeling: ViewModeling {
+    ///ViewModel data
+    associatedtype Item
+    var data: DynamicValue<[Item]> { get }
     
+    ///TableVeiw DataSource
+    var numberOfRows: Int { get }
+    func itemAt(_ indexPath: IndexPath) -> School
+    func dataForRowAtIndexPath(_ indexPath: IndexPath) -> SchoolViewModel
+}
+
+
+class HomeViewModel: HomeViewModeling {
+    
+    typealias Item = School
+    var data: DynamicValue<[School]> = DynamicValue([])
+    
+    ///Private scope
+    ///HomeViewModel takes a mandatory parameter DataManaging
     private var dataManager: DataManaging
-    private var schoolList: [School] = [] {
-        didSet {
-            reloadData?()
+    //private var schoolList: [School] = []
+    
+    private func fetchSchoolList() {
+        dataManager.fetchSchoolList { [weak self] (response, error) in
+            guard let self = self else { return }
+            guard let list = response as? [School] else { print(error?.localizedDescription ?? ""); return }
+            self.data.value = list
         }
     }
     
+    ///Default value set to dataManager is HomeDataManager
+    ///Pass your own dataManager based on need
     required init(_ dataManager: DataManaging = HomeDataManager()) {
         self.dataManager = dataManager
-    }
-    
-    func fetchSchoolList(_ callBack: @escaping () -> Void) {
-        isLoading = true
-        dataManager.fetchSchoolList { [weak self] (response, error) in
-            guard let strongSelf = self else { return }
-            strongSelf.isLoading = false
-            guard let list = response as? [School] else {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            strongSelf.schoolList = list
-            callBack()
-        }
+        fetchSchoolList()
     }
 }
 
 extension HomeViewModel {
     
     var numberOfRows: Int {
-        return schoolList.count
+        return data.value.count
     }
     
     func dataForRowAtIndexPath(_ indexPath: IndexPath) -> SchoolViewModel {
-        return SchoolViewModel(schoolList[indexPath.row])
+        return SchoolViewModel(data.value[indexPath.row])
     }
     
-    func schoolAt(_ indexPath: IndexPath) -> School {
-        return schoolList[indexPath.row]
+    func itemAt(_ indexPath: IndexPath) -> School {
+        return data.value[indexPath.row]
     }
 }
 
-
-
-class SchoolSatViewModel: BaseViewModel {
-    
-    private var dataManager: DataManaging
-    private var schoolSat: [SchoolSat] = [] {
-        didSet {
-            reloadData?()
-        }
-    }
-    
-    required init(_ dataManager: DataManaging = HomeDataManager()) {
-        self.dataManager = dataManager
-    }
-    
-    func fetchSatScore(_ callBack: @escaping () -> Void) {
-        isLoading = true
-        dataManager.getSatScore { [weak self] (response, error) in
-            guard let strongSelf = self else { return }
-            strongSelf.isLoading = false
-            guard let sat = response as? [SchoolSat] else {
-                print(error?.localizedDescription ?? "")
-                return
-            }
-            strongSelf.schoolSat = sat
-            callBack()
-        }
-    }
-}

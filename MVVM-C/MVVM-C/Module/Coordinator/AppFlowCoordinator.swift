@@ -9,34 +9,48 @@
 import UIKit
 import Foundation
 
-protocol FlowCoordinating { }
+protocol FlowCoordinating {
+    func start()
+    func finish()
+}
 
-class AppFlowCoordinator: FlowCoordinating {
-    private var controller: UIViewController = UIViewController()
+protocol AppFlowCoordinating: FlowCoordinating {
+    func coordinateToDetailWithItem(_ item: School)
+}
+
+extension AppFlowCoordinating {
+    func coordinateToDetailWithItem(_ item: School) { }
+}
+
+class AppFlowCoordinator: AppFlowCoordinating {
+    
     private var navigationController: UINavigationController?
+    
+    private func coordinateToSchoolSat() {
+        let controller = SatViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    private func coordinateToSchoolList() {
+        let viewModel = HomeViewModel()
+        let homeViewController = HomeViewController(viewModel,delegate: self)
+        navigationController?.setViewControllers([homeViewController], animated: false)
+    }
+    
     
     required init(_ contex: UINavigationController?) {
         self.navigationController = contex
     }
     
     func start() {
-        let dataManager = HomeDataManager()
-        let viewModel = HomeViewModel(dataManager)
-        let homeViewController = HomeViewController(viewModel) { (school) in
-            print(school)
-            self.gotoSat()
-        }
-        viewModel.fetchSchoolList {
-            self.controller = homeViewController
-            self.navigationController?.setViewControllers([self.controller], animated: false)
-        }
+        coordinateToSchoolList()
     }
     
-    private func gotoSat() {
-        let dataManager = HomeDataManager()
-        let viewModel = SchoolSatViewModel(dataManager)
-        viewModel.fetchSatScore {
-            // GoTo Sat
-        }
+    func coordinateToDetailWithItem(_ item: School) {
+        coordinateToSchoolSat()
+    }
+    
+    func finish() {
+        navigationController = nil
     }
 }

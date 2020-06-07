@@ -27,7 +27,6 @@ struct HomeDataManager: DataManaging {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode([School].self, from: response)
-            print(decoded[0].academicopportunitiesOne ?? "")
             completion(decoded, error)
         } catch {
             completion([], error)

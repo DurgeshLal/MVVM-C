@@ -8,9 +8,9 @@
 
 import UIKit
 
-class HomeViewController: BaseViewController {
+class HomeViewController<T: HomeViewModeling>: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
-    private var viewModel: HomeViewModel
+    private var viewModel: T
     private var delegate: AppFlowCoordinating?
     
     private lazy var tableView: UITableView = {
@@ -43,7 +43,7 @@ class HomeViewController: BaseViewController {
         tableView.reloadData()
     }
     
-    required init(_ viewModel: HomeViewModel = HomeViewModel(), delegate: AppFlowCoordinating? = nil) {
+    required init(_ viewModel: T, delegate: AppFlowCoordinating? = nil) {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -65,38 +65,31 @@ class HomeViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.fetchList()
     }
-}
-
-///UITableViewDelegate
-extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.coordinateToDetailWithItem(viewModel.itemAt(indexPath))
-    }
-}
-
-///UITableViewDataSource
-extension HomeViewController: UITableViewDataSource {
+           tableView.deselectRow(at: indexPath, animated: true)
+       }
+       
+       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+           //delegate?.coordinateToDetailWithItem(viewModel.itemAt(indexPath))
+       }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows
-    }
-    
-    private func itemCell(_ indexPath: IndexPath, _ tableView: UITableView) -> UITableViewCell {
-        let cell: SchooleListCell = tableView.dequeueReusableCell(forIndexPath: indexPath) as SchooleListCell
-        let schoolViewModel = viewModel.dataForRowAtIndexPath(indexPath)
-        cell.viewModel = schoolViewModel
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return itemCell(indexPath, tableView)
-    }
+           return viewModel.numberOfRows
+       }
+       
+       private func itemCell(_ indexPath: IndexPath, _ tableView: UITableView) -> UITableViewCell {
+           let cell: SchooleListCell = tableView.dequeueReusableCell(forIndexPath: indexPath) as SchooleListCell
+           let schoolViewModel = viewModel.dataForRowAtIndexPath(indexPath)
+           cell.viewModel = schoolViewModel
+           return cell
+       }
+       
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           return itemCell(indexPath, tableView)
+       }
 }
+
 
 ///Api
 extension HomeViewController {

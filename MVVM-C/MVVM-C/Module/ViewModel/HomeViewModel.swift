@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ViewModeling { }
+protocol ViewModeling: class { }
 
 protocol HomeViewModeling: ViewModeling {
     ///ViewModel data
@@ -17,7 +17,7 @@ protocol HomeViewModeling: ViewModeling {
     
     ///TableVeiw DataSource
     var numberOfRows: Int { get }
-    func itemAt(_ indexPath: IndexPath) -> School
+    func itemAt(_ indexPath: IndexPath) -> Item
     func dataForRowAtIndexPath(_ indexPath: IndexPath) -> SchoolViewModel
 }
 
